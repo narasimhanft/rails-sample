@@ -1,0 +1,19 @@
+<div class="col-md-8">
+<pre><h3>Micropost</h3> posted <%= time_ago_in_words(@micropost.created_at) %> ago.</pre>
+
+<span class="content"><%= @micropost.content %></span>
+<pre>
+<div class="col-md-8">
+   <% if @micropost.comments.any? %>
+     <h4>Comments (<%= @micropost.comments.count %>)</h4>
+     <ol class="microposts">
+       <%= render @comments %>
+     </ol>
+   <% end %>
+
+</div>
+</pre>
+</div>
+<section class="comment_form">
+  <%= render 'shared/comment_form' %>
+</section>

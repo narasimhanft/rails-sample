@@ -1,0 +1,5 @@
+<%= form_for(@favourite) do |f| %>
+  <%= f.hidden_field :micropost_id, value: micropost.id %>
+  <%= f.hidden_field :user_id, value: current_user.id %>
+  <%= f.submit "Like", class: "btn btn-primary btn-xs" %>
+<% end %>

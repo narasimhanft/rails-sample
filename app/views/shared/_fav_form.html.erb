@@ -1,0 +1,7 @@
+<div id="fav_form">
+  <% if current_user.fav?() %>
+    <%= render 'unfav' %>
+  <% else %>
+    <%= render 'fav' %>
+  <% end %>
+</div>

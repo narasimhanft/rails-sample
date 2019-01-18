@@ -1,0 +1,33 @@
+<li id="micropost-<%= micropost.id %>">
+  <span class="user"><%= link_to micropost.user.name, micropost.user %></span>
+  <span class="content"><%= micropost.content %></span>
+  <span class="timestamp">
+    Posted <%= time_ago_in_words(micropost.created_at) %> ago.
+
+
+    <% if current_user?(micropost.user) %>
+      <%= link_to "delete", micropost, method: :delete,
+                                       data: { confirm: "You sure?" } %>
+    <% end %>
+    <div id="fav_form">
+      <% if micropost.user_id != current_user.id %>
+      <% if !micropost.favourites.find_by(user_id: current_user.id).nil? %>
+      <%= form_for(micropost.favourites.find_by(user_id: current_user.id),
+                   html: { method: :delete })  do |f| %>
+        <%= f.submit "Unlike", class: "btn btn-primary", style: "width: 80px"%>
+      <% end %>
+      <% else %>
+      <%= form_for(micropost.favourites.build) do |f| %>
+        <%= f.hidden_field :micropost_id, value: micropost.id %>
+        <%= f.hidden_field :user_id, value: current_user.id %>
+        <%= f.submit "Like", class: "btn btn-primary btn-xs", style: "width: 80px" %>
+      <% end %>
+      <% end %>
+      <% end %>
+    </div>
+    <%= link_to ( micropost.comments.count ).to_s + " comments", micropost_path(micropost.id),  method: :get %>
+    <%= link_to ( micropost.favourites.count ).to_s + " likes", favourites_micropost_path(micropost.id),  method: :get %>
+
+  </span>
+
+</li>
