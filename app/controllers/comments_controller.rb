@@ -7,9 +7,9 @@ class CommentsController < ApplicationController
     if @comment.save
       flash[:success] = "Comment created!"
 
-      CmctupdateJob.perform_later current_post
-      HardWorker.perform_async('bob', 5)
-      
+      # CmctupdateJob.perform_later current_post
+      NotifierJob.perform_later(current_post.user,current_user)
+
       redirect_to request.referrer || root_url
     else
       @comments = []
